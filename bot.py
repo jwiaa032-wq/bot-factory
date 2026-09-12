@@ -1,6 +1,29 @@
 import os
 import asyncio
+import http.server
+import socketserver
+import threading
 from telethon import TelegramClient, events, Button
+
+# --- تشغيل سيرفر وهمي لتلبية شروط Render ---
+PORT = int(os.getenv("PORT", 10000))
+
+def run_dummy_server():
+    class SimpleHandler(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"Bot is alive and running!")
+        def log_message(self, format, *args):
+            pass # منع التكرار المزعج في السجلات
+
+    with socketserver.TCPServer(("", PORT), SimpleHandler) as httpd:
+        print(f"Dummy web server started on port {PORT}")
+        httpd.serve_forever()
+
+# تشغيل السيرفر في خلفية النظام
+threading.Thread(target=run_dummy_server, daemon=True).start()
+# ---------------------------------------------
 
 api_id = int(os.getenv("API_ID", "38490110"))
 api_hash = os.getenv("API_HASH", "3cabfdfa15f2e56b515084fe592c1be8")
@@ -70,7 +93,6 @@ async def ref_link_cb(event):
 async def handle_input(event):
     sender_id = event.sender_id
     
-    # معالجة إدخال التوكن لبوت الرشق الجديد
     if user_states.get(sender_id) == "waiting_for_token":
         token = event.text.strip()
         if ":" in token and len(token) > 20:
@@ -82,7 +104,6 @@ async def handle_input(event):
             await event.respond("❌ **التوكن غير صحيح! تأكد من نسخه كاملاً من @BotFather**")
         return
 
-    # الحالات الأخرى (مثل رشق القنوات)
     if sender_id in user_states:
         state = user_states.pop(sender_id)
         user_input = event.text.strip()
