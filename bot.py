@@ -1,5 +1,10 @@
 import asyncio
 from telethon import TelegramClient
+
+api_id = 38490110
+api_hash = '3cabfdfa15f2e56b515084fe592c1be8'
+BOT_TOKEN = '8854458869:AAHKVDq0kBDzI42Rz4qB1W25A_oS4mi0qDc'
+
 def get_main_menu_buttons():
     status_icon = "🟢 (شغال)" if reactions_status else "🔴 (متوقف)"
     return [
