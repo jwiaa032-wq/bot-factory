@@ -129,17 +129,12 @@ async def main():
             user_input = event.text.strip()
             if state == "waiting_for_tg_channel":
                 await event.respond(f"✅ تم استلام الرابط: `{user_input}`\n🚀 جاري الرشق...")
-                asyncio.create_task(background_add_helpers(user_input, user_client, bot_client, sender_id))
-
-    await asyncio.gather(bot_client.run_until_disconnected(), user_client.run_until_disconnected())
+                asyncio.create_task(background_add_helpers(user_input, user_client, bot_client, 
 
 if __name__ == '__main__':
-    while True:
-        try:
-            asyncio.run(main())
-        except KeyboardInterrupt:
-            print("🛑 توقف يدوياً.")
-            break
-        except Exception as e:
-            print(f"⚠️ خطأ رئيسي: {e}")
-            import time
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("🛑 توقف يدوياً.")
+    except Exception as e:
+        print(f"⚠️ خطأ رئيسي: {e}")
