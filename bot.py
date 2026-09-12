@@ -1,3 +1,4 @@
+import asyncio
 def get_main_menu_buttons():
     status_icon = "🟢 (شغال)" if reactions_status else "🔴 (متوقف)"
     return [
