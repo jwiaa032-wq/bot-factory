@@ -1,12 +1,14 @@
+import os
 import asyncio
 from telethon import TelegramClient
 
-api_id = 38490110
-api_hash = '3cabfdfa15f2e56b515084fe592c1be8'
-BOT_TOKEN = '8854458869:AAHKVDq0kBDzI42Rz4qB1W25A_oS4mi0qDc'
+api_id = int(os.getenv("API_ID", "38490110"))
+api_hash = os.getenv("API_HASH", "3cabfdfa15f2e56b515084fe592c1be8")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8854458869:AAHKVDq0kBDzI42Rz4qB1W25A_oS4mi0qDc")
+phone_number = None
 
 def get_main_menu_buttons():
-    status_icon = "🟢 (شغال)" if reactions_status else "🔴 (متوقف)"
+
     return [
         [Button.inline("🎵 خدمات تيك توك", b"tiktok_services"), Button.inline("👥 رشق أعضاء تيلي", b"telegram_boost")],
         [Button.inline(f"🤖 التفاعلات التلقائية {status_icon}", b"toggle_reactions")],
