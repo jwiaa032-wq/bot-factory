@@ -128,8 +128,8 @@ async def main():
             state = user_states.pop(sender_id)
             user_input = event.text.strip()
             if state == "waiting_for_tg_channel":
-                await event.respond(f"✅ تم استلام الرابط: `{user_input}`\n🚀 جاري الرشق...")
-                asyncio.create_task(background_add_helpers(user_input, user_client, bot_client, 
+    await event.respond(f"✅ تم استلام الرابط بنجاح!")
+    asyncio.create_task(background_add_helpers(user_input, user_client, bot_client))
 
 if __name__ == '__main__':
     try:
